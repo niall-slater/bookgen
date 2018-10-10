@@ -1,0 +1,48 @@
+body {
+	font-family: sans-serif;
+	text-align: center;
+}
+
+.card {
+	width: 50%;
+	margin: auto;
+	background: #eee;
+	padding: 1em;
+}
+
+#bg {
+	width: 200px;
+	height: 323px;
+	margin: auto;
+	
+	position: relative;
+}
+
+#cover {
+	width: 200px;
+	height: 323px;
+	margin: auto;
+	
+	position: absolute;
+	
+	transform: skewY(9deg) translateY(32px) scaleY(1.1);
+	
+}
+
+#cover h1 {
+	position: absolute;
+	
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	
+	width: 95%;
+	height: 95%;
+	overflow: hidden;
+	margin: auto;
+	font-size: 1.4em;
+	color: white;
+	
+	text-shadow: 2px 2px 2px rgba(0,0,0,0.5);
+}

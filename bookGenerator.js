@@ -4,7 +4,7 @@
 var nouns = ["brexit", "bastard", "prophecy", "countryside", "sword", "book", "thief", "puppet", "miniaturist", "girl", "son", "mother", "daughter", "colleague", "politician", "queen", "treasure", "teenage boy", "pencil", "warehouse", "ham shank", "battle", "wizard school", "obelisk", "potion", "carpet", "violet", "rose", "marble", "referendum", "party", "beer", "vodka shot", "cigarette", "motorbike", "spellbook", "life", "death", "romance", "affair", "bird", "crow", "escort", "game", "artist", "wank", "word", "creature", "lizard", "blogger", "blog", "professor", "murder", "gamergater", "gate", "promise", "gun", "nazi"];
 var nouns_plural = ["prophecies", "bastards", "country houses", "swords", "books", "thieves", "puppets", "miniaturists", "girls", "sons", "mothers", "daughters", "colleagues", "politicians", "queens", "treasures", "teenage boys", "pencils", "warehouses", "ham shanks", "battle", "wizard schools", "obelisks", "potions", "carpets", "flowers", "lilies", "marbles", "elections", "parties", "beers", "vodka shots", "cigarettes", "motorbikes", "murders", "spellbooks", "lives", "deaths", "romances", "affairs", "members of parliament", "words", "birds", "ravens", "vampires", "werewolves", "dinosaurs", "creatures", "bloggers", "blogs", "promises", "guns", "plumbers", "white nationalists"];
 var nouns_proper = ["brexit", "life", "death", "love", "betrayal", "pain", "suffering", "democracy", "fascism", "art", "vulgarity", "sex", "anger", "frustration", "france", "earth", "meaning", "heaven", "wine", "cake", "rosemary", "gamergate", "racism", "white supremacy", "sexism"];
-var adjectives = ["cold", "aggressive", "ugly", "poorly-conceived", "unplanned", "racist", "expensive", "cheap", "slutty", "prudent", "unwise", "tasty", "difficult", "angry", "unpredictable", "second", "first", "regrettable", "magical", "enchanted", "beautiful", "left-wing", "right-wing", "centrist", "politically-expedient", "scientifically-proven", "dubious", "disastrous", "final", "sexually exciting", "sad", "unpublishable", "artful", "rough",];
+var adjectives = ["cold", "aggressive", "ugly", "poorly-Conceived", "unplanned", "racist", "expensive", "cheap", "slutty", "prudent", "unwise", "tasty", "difficult", "angry", "unpredictable", "second", "first", "regrettable", "magical", "enchanted", "beautiful", "left-Wing", "right-Wing", "centrist", "politically-Expedient", "scientifically-Proven", "dubious", "disastrous", "final", "sexually exciting", "sad", "unpublishable", "artful", "rough",];
 var quests = ["quest", "journey", "trek", "escapade", "road trip", "mission", "suicide mission"];
 var verbs_present = ["kill", "brexit", "kiss", "arraign", "march", "serve", "hit", "shake", "walk", "escort", "fight", "sort out", "ruin", "destroy", "repair", "give birth to", "celebrate", "commemorate", "remember", "forget", "drive", "smoke", "regret", "seduce", "frighten", "cuddle", "follow", "marry", "murder", "write a novel", "annex", "backpack"];
 var verbs_present_er = ["kill", "brexit", "kiss", "arraign", "march", "serv", "hitt", "shak", "walk", "escort", "fight", "ruin", "destroy", "repair", "birth", "stalk", "hold", "remember", "forgett", "driv", "smok", "regrett", "seduc", "frighten", "cuddl", "follow", "murder"];
@@ -45,6 +45,7 @@ function drawCover() {
 	
 	var img = document.createElement('img');
 	img.src = "./img/" + sig + ".jpg";
+	img.src = "https://source.unsplash.com/random/200x323";
 	
 	el_cover.appendChild(img);
 	
@@ -53,10 +54,9 @@ function drawCover() {
 	
 	coverTitle.textContent = bookTitle;
 	
+	setRandomFont(coverTitle);
+	
 }
-
-titleElement.textContent = bookTitle;
-drawCover();
 
 function generateTitle()
 {
@@ -171,6 +171,8 @@ function generateTitle()
         break;
     }
     
+	result = grammarCheck(result);
+	
     return result;
 }
 
@@ -186,5 +188,29 @@ function GetWord(wordType)
 
 function toTitleCase(str)
 {
-    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+	var result = str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+	
+	
+	return result;
 }
+
+function grammarCheck(str) {
+	
+	var result = str.replace('A A', 'An A');
+	
+	return result;
+}
+
+function setRandomFont(element) {
+	
+	var fonts = ['Montserrat', 'Oswald', 'Dosis', 'Josefin Sans', 'Bree Serif', 'Amatic SC'];
+	
+	var selector = Math.floor(Math.random() * fonts.length);
+	
+	element.style.fontFamily = fonts[selector];
+	
+	
+}
+
+titleElement.textContent = bookTitle;
+drawCover();

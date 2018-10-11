@@ -26,7 +26,6 @@ var problems = ["Conundrum", "Case", "Affair", "Problem", "Decision", "Ultimatum
 var titleElement = document.getElementById('bookTitle');
 var bookTitle = generateTitle();
 
-var el_bg = document.getElementById('bg');
 var el_cover = document.getElementById('cover');
 
 function getTitle() {
@@ -44,12 +43,9 @@ function drawCover() {
 	
 	//200x323
 	
-	var bg = document.createElement('img');
-	bg.src = "./img/3dcover.png";
 	var img = document.createElement('img');
 	img.src = "./img/" + sig + ".jpg";
 	
-	el_bg.appendChild(bg);
 	el_cover.appendChild(img);
 	
 	var coverTitle = document.createElement('h1');

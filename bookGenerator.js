@@ -14,8 +14,8 @@ var times = ["nanosecond", "second", "minute", "hour", "day", "days", "week", "f
 var nationalities = ["Irish", "Romanian", "German", "French", "Scottish", "English", "British", "Welsh", "Polish", "Russian", "Hungarian", "Canadian", "North American", "Australian", "Alien", "Foreign"];
 var groups = ["army", "football team", "navy", "publishing industry", "parks department", "bake-off", "government", "underground crab army", "WhatsApp group", "far-right", "far-left", "special forces", "film industry", "high street bakery"];
 var celebs = ["Margaret Thatcher", "Nigel Farage", "Dwayne 'The Rock' Johnson", "Mara Wilson", "Neil Gaiman", "Daedalus Mole", "Taika Waititi", "Robert Downey Junior", "Jonathan Franzen", "Arin Hanson", "Richard Spencer", "Jeremy Corbyn", "Gordon Brown", "Alan Sugar", "Donald Trump", "Barack Obama", "George W. Bush"];
-var forenames = ["Barry", "Keith", "Susan", "Patricia", "Nigel", "Poppy", "Ellen", "Eleanor", "Samia", "Brad", "Joe", "Riz", "Gunther", "Hans"];
-var surnames = ["Ahmed", "Trotter", "Harding", "Cornwell", "Smith", "Shaw", "Blount", "Shah", "Rosen", "Choudhury", "Tang", "Glau", "Blitz"];
+var forenames = ["Barry", "Keith", "Susan", "Patricia", "Nigel", "Poppy", "Ellen", "Eleanor", "Samia", "Brad", "Joe", "Riz", "Gunther", "Hans", "Jacob", "Horace", "Elmer", "Sarah", "Steven", "Kurt"];
+var surnames = ["Ahmed", "Trotter", "Harding", "Cornwell", "Smith", "Shaw", "Blount", "Shah", "Rosen", "Choudhury", "Tang", "Glau", "Blitz", "Rowling", "Shan", "Jenkins", "Shukla", "Rees Mogg", "Vonnegut"];
 var problems = ["Conundrum", "Case", "Affair", "Problem", "Decision", "Ultimatum", "Incident", "Discovery", "Disaster", "Campaign", "Death"];
 
 
@@ -29,6 +29,19 @@ var bookTitle = generateTitle();
 var authorName = getRandomName();
 
 var el_cover = document.getElementById('cover');
+var el_loading = document.getElementById('loading');
+
+var fonts = ['Oswald', 'Dosis', 'Josefin Sans', 'Bree Serif', 'Amatic SC', 'Charmonman', 'Bitter', 'Pacifico', 'Shadows Into Light', 'Dancing Script', 'Srisakdi', 'Kaushan Script', 'Poiret One', 'Lobster Two', 'Russo One', 'Monoton'];
+
+function loadFonts() {
+	for (var i = 0; i < fonts.length; i++) {
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		var str = fonts[i].replace(' ', '+');
+		link.href = "https://fonts.googleapis.com/css?family=" + str;
+		document.head.appendChild(link);
+	}
+}
 
 function getTitle() {
 	
@@ -49,6 +62,8 @@ function drawCover() {
 	img.src = "./img/" + sig + ".jpg";
 	img.src = "https://source.unsplash.com/random/200x323";
 	
+	img.addEventListener("load", onCoverLoad);
+	
 	el_cover.appendChild(img);
 	
 	var coverTitle = document.createElement('h1');
@@ -60,6 +75,7 @@ function drawCover() {
 	coverName.textContent = authorName;
 	
 	setRandomFont(coverTitle);
+	setRandomFont(coverName);
 	applyRandomFormatting(coverTitle);
 	
 }
@@ -110,7 +126,7 @@ function generateTitle()
         result = GetWord(verbs_present_ing) + " with " + GetWord(nouns_plural) + ": the " + GetWord(celebs) + " Story";
         break;
     case 9:
-        result = "To " + GetWord(verbs_present) + " a " + GetWord(nouns) + ": the Memoir of " + GetWord(celebs)
+        result = "To " + GetWord(verbs_present) + " a " + GetWord(nouns) + ": the Life of " + GetWord(celebs)
         break;
     case 10:
         result = GetWord(nouns_plural) + " for " + GetWord(nouns_plural);
@@ -155,7 +171,7 @@ function generateTitle()
         result = "The " + GetWord(nationalities) + " " + GetWord(nouns_proper) + " " + GetWord(problems);
         break;
     case 24:
-        result = "The " + GetWord(nationalities) + " " + GetWord(celebs) + " " + GetWord(problems);
+        result = "The " + GetWord(nationalities) + " " + GetWord(nouns) + " " + GetWord(problems);
         break;
     case 25:
         result = GetWord(verbs_present_ing_with) + " with " + GetWord(celebs);
@@ -203,15 +219,23 @@ function toTitleCase(str)
 function grammarCheck(str) {
 	
 	var result = str.replace('A A', 'An A');
+	result = result.replace('a a', 'An A');
+	result = result.replace('a A', 'An A');
+	result = result.replace('A a', 'An A');
+	
+	result = result.replace('-p', '-P');
+	result = result.replace('-c', '-C');
+	result = result.replace('-w', '-W');
+	result = result.replace('-e', '-E');
 	
 	return result;
 }
 
 function setRandomFont(element) {
 	
-	var fonts = ['Montserrat', 'Oswald', 'Dosis', 'Josefin Sans', 'Bree Serif', 'Amatic SC'];
-	
 	var selector = Math.floor(Math.random() * fonts.length);
+	
+	console.log(fonts[selector]);
 	
 	element.style.fontFamily = fonts[selector];
 }
@@ -224,7 +248,21 @@ function applyRandomFormatting(element) {
 		} else {
 			element.className += 'tiltRight';
 		}
+	} else if (Math.random() > 0.5) {
+		element.className += ' alignLeft';
+		element.style.left = '12px';
 	}
+	
+	element.style.lineHeight = '' + (.8 + Math.random()/2) + 'em';
+	element.style.fontWeight = '' + (300 + Math.floor(Math.random()*10) * 100);
+	var spacing = .01 + Math.random()/8;
+	element.style.letterSpacing = '' + spacing + 'em';
+	if (spacing > .03 || element.style.fontFamily == 'Monoton') {
+		console.log('yes');
+		element.fontSize = '0.5em';
+	}
+	
+	console.log(element.style.cssText);
 	
 }
 
@@ -232,6 +270,10 @@ function getRandomName() {
 	return GetWord(forenames) + " " + GetWord(surnames);
 }
 
-titleElement.textContent = bookTitle;
-authorElement.textContent = authorName;
+function onCoverLoad() {
+	el_loading.style.opacity = '0';
+	el_cover.style.opacity = '1';
+}
+
+loadFonts();
 drawCover();

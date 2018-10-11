@@ -24,7 +24,9 @@ var problems = ["Conundrum", "Case", "Affair", "Problem", "Decision", "Ultimatum
 //Generate a book
 
 var titleElement = document.getElementById('bookTitle');
+var authorElement = document.getElementById('author');
 var bookTitle = generateTitle();
+var authorName = getRandomName();
 
 var el_cover = document.getElementById('cover');
 
@@ -51,10 +53,14 @@ function drawCover() {
 	
 	var coverTitle = document.createElement('h1');
 	el_cover.appendChild(coverTitle);
+	var coverName = document.createElement('h2');
+	el_cover.appendChild(coverName);
 	
 	coverTitle.textContent = bookTitle;
+	coverName.textContent = authorName;
 	
 	setRandomFont(coverTitle);
+	applyRandomFormatting(coverTitle);
 	
 }
 
@@ -89,7 +95,7 @@ function generateTitle()
         result = "To " + GetWord(verbs_present) + " a " + GetWord(nouns);
         break;
     case 4:
-        result = "The " + GetWord(quests) + " for the " + GetWord(adjectives) + " " + GetWord(nouns);
+        result = GetWord(quests) + " for the " + GetWord(adjectives) + " " + GetWord(nouns);
         break;
     case 5:
         result = "The " + GetWord(nouns) + " with the " + GetWord(adjectives) + " Tattoo";
@@ -208,9 +214,24 @@ function setRandomFont(element) {
 	var selector = Math.floor(Math.random() * fonts.length);
 	
 	element.style.fontFamily = fonts[selector];
+}
+
+function applyRandomFormatting(element) {
 	
+	if (Math.random() > 0.5) {
+		if (Math.random() > 0.5) {
+			element.className += 'tiltLeft';
+		} else {
+			element.className += 'tiltRight';
+		}
+	}
 	
 }
 
+function getRandomName() {
+	return GetWord(forenames) + " " + GetWord(surnames);
+}
+
 titleElement.textContent = bookTitle;
+authorElement.textContent = authorName;
 drawCover();
